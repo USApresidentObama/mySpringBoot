@@ -6,7 +6,7 @@ import java.util.List;
 /**
  * Created by liuao on 2018/11/19.
  */
-public class User implements Serializable{
+public class User implements Serializable {
     private static final long serialVersionUID = -6309285186522625503L;
 
     private Integer id;

@@ -18,9 +18,9 @@ public class CustomerJsonSerializer {
     JacksonJsonFilter jacksonFilter = new JacksonJsonFilter();
 
     /**
-     * @param clazz target type
+     * @param clazz   target type
      * @param include include fields
-     * @param filter filter fields
+     * @param filter  filter fields
      */
     public void filter(Class<?> clazz, String include, String filter) {
         if (clazz == null) return;

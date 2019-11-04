@@ -5,7 +5,7 @@ import java.io.Serializable;
 /**
  * Created by liuao on 2018/11/19.
  */
-public class Role implements Serializable{
+public class Role implements Serializable {
     private static final long serialVersionUID = 300018250815655845L;
 
     private Integer id;

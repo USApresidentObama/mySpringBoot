@@ -12,6 +12,8 @@ import java.lang.annotation.Target;
 @Retention(RetentionPolicy.RUNTIME)
 public @interface JSON2 {
     Class<?> type(); //需要设置规则的Class
+
     String include() default ""; //转换时包含哪些字段
+
     String filter() default ""; //转换时过滤哪些字段
 }

@@ -21,9 +21,10 @@ import java.util.List;
 //@EnableWebMvc
 public class MvcRetureConfiguration extends WebMvcConfigurerAdapter {
     @Bean
-    public JsonReturnHandler jsonReturnHandler(){
+    public JsonReturnHandler jsonReturnHandler() {
         return new JsonReturnHandler();//初始化json过滤器
     }
+
     @Override
     public void addReturnValueHandlers(List<HandlerMethodReturnValueHandler> returnValueHandlers) {
         returnValueHandlers.add(jsonReturnHandler());

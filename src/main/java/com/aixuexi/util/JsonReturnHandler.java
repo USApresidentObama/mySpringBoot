@@ -44,15 +44,15 @@ public class JsonReturnHandler implements HandlerMethodReturnValueHandler {
         Arrays.asList(annos).forEach(a -> { // 解析注解，设置过滤条件
             if (a instanceof JSON) {
                 JSON json = (JSON) a;
-                jsonSerializer.filter(json.type(),json.include(),json.filter());
+                jsonSerializer.filter(json.type(), json.include(), json.filter());
             } else if (a instanceof JSONS) { // 使用多重注解时，实际返回的是 @Repeatable(JSONS.class) 内指定的 @JSONS 注解
                 JSONS jsons = (JSONS) a;
                 Arrays.asList(jsons.value()).forEach(json -> {
-                    jsonSerializer.filter(json.type(),json.include(),json.filter());
+                    jsonSerializer.filter(json.type(), json.include(), json.filter());
                 });
-            }else if(a instanceof JSON2) {
+            } else if (a instanceof JSON2) {
                 JSON2 json = (JSON2) a;
-                jsonSerializer.filter(json.type(),json.include(),json.filter());
+                jsonSerializer.filter(json.type(), json.include(), json.filter());
             }
         });
 
