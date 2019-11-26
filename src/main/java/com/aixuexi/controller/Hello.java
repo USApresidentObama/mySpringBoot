@@ -1,5 +1,6 @@
 package com.aixuexi.controller;
 
+import com.aixuexi.model.EnumColor;
 import com.aixuexi.model.Role;
 import com.aixuexi.model.User;
 import com.aixuexi.util.annotation.JSON;
@@ -28,45 +29,12 @@ public class Hello {
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public User getUser() {
-        String html = "<div class=\"axx_piece\">\n" +
-                "      <p>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">如图，</span>\n" +
-                "        <span style=\"\">\\[\\angle 1=\\]</span>\n" +
-                "        <span style=\"\">50</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">°，</span>\n" +
-                "        <span style=\"\">\\[\\angle 2=\\]</span>\n" +
-                "        <span style=\"\">60</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">°，</span>\n" +
-                "        <span style=\"position:relative;top:3pt;\">\\[\\angle 3=\\]</span>\n" +
-                "        <span style=\"\">30</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">°，</span>\n" +
-                "        <span style=\"\">\\[\\angle 4=\\]</span>\n" +
-                "        <span style=\"\">60</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">°，那么，</span>\n" +
-                "        <span style=\"\">\\[\\angle 5\\]</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">等于</span>\n" +
-                "        <span style=\"\">________</span>\n" +
-                "        <span lang=\"zh-CN\" style=\"\">度．</span>\n" +
-                "        <span style=\"\">\n" +
-                "          </span>\n" +
-                "        <span style=\"\">\n" +
-                "          <img class=\"axx_inlineimage\" src=\"http://tiku-static.aixuexi.com//IMP20170810/88ea621e7baf4f3eb379dc84902c36b7/content/content.files/image1.png?i=636379987406456981\" style=\"width: 111.15pt; height: 81.25pt\" alt=\"aixuexiimg6,\" />\n" +
-                "        </span>\n" +
-                "      </p>\n" +
-                "    </div>";
-        Document doc = Jsoup.parseBodyFragment(html);
-        List<Node> list = doc.body().getAllElements().get(0).childNodes();
-        recursiveRemoveStyle(list);
-
-        String retHtml = doc.body().html();
-//        retHtml = retHtml.replaceAll("<html>\n","");
-//        retHtml = retHtml.replaceAll("\n</html>","");
-//        retHtml = retHtml.replaceAll("<head>","");
-//        retHtml = retHtml.replaceAll("</head>\n","");
-//        retHtml = retHtml.replaceAll("<body>\n","");
-//        retHtml = retHtml.replaceAll("\n</body>","");
-        System.out.println(retHtml);
-        return new User();
+        User user = new User();
+        user.setId(1);
+        user.setAge(2);
+        user.setName("liuao");
+        user.setEnumColor(EnumColor.RED);
+        return user;
     }
 
     private void recursiveRemoveStyle(List<Node> nodes) {

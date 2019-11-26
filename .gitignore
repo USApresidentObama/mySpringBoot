@@ -17,5 +17,6 @@ dependency-reduced-pom.xml
 .idea/*
 node_modules/
 *.patch
+log/
 
 /bin/
