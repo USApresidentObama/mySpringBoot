@@ -1,13 +1,16 @@
 package com.aixuexi;
 
-import com.alibaba.dubbo.common.URL;
-import com.alibaba.dubbo.common.extension.ExtensionLoader;
+
+import com.aixuexi.model.User;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Tets {
     public static void main(String[] args) {
+        User user = new User();
+        System.out.println(user.equals(null));
+
     }
 
 

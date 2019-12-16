@@ -14,6 +14,7 @@ public class User implements Serializable {
     private String name;
     private Integer sex;
     private Integer deleted;
+    private EnumColor enumColor;
 
     private List<Role> roles;
 
@@ -65,15 +66,16 @@ public class User implements Serializable {
         this.roles = roles;
     }
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", age=" + age +
-                ", name='" + name + '\'' +
-                ", sex=" + sex +
-                ", deleted=" + deleted +
-                ", roles=" + roles +
-                '}';
+    public EnumColor getEnumColor() {
+        return enumColor;
+    }
+
+    public void setEnumColor(EnumColor enumColor) {
+        this.enumColor = enumColor;
+    }
+
+    @Override public String toString() {
+        return "User{" + "id=" + id + ", age=" + age + ", name='" + name + '\'' + ", sex=" + sex + ", deleted="
+                + deleted + ", enumColor=" + enumColor + ", roles=" + roles + '}';
     }
 }
