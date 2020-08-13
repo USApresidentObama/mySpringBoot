@@ -15,7 +15,7 @@
         <version>2.1.0.RELEASE</version>
     </parent>
     <properties>
-        <java.version>1.7</java.version>
+        <java.version>1.8</java.version>
     </properties>
 
 
@@ -51,6 +51,11 @@
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
             <version>3.1.10.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>com.liepin</groupId>
+            <artifactId>ins-cetus-util</artifactId>
+            <version>0.0.2</version>
         </dependency>
 
     </dependencies>

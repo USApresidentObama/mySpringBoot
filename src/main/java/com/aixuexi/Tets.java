@@ -2,15 +2,18 @@ package com.aixuexi;
 
 
 import com.aixuexi.model.User;
+import com.aixuexi.util.DesUtil;
+import com.liepin.cetus.util.base.BigIntegerUtil;
 
+import java.math.BigInteger;
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
 public class Tets {
-    public static void main(String[] args) {
-        User user = new User();
-        System.out.println(user.equals(null));
-
+    public static void main(String[] args) throws InterruptedException {
     }
 
 
