@@ -44,7 +44,7 @@
         <dependency>
             <groupId>org.elasticsearch</groupId>
             <artifactId>elasticsearch</artifactId>
-            <version>2.4.6</version>
+            <version>6.8.13</version>
         </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
         <dependency>
