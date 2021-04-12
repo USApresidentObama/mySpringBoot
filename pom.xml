@@ -56,28 +56,12 @@
             <artifactId>guava</artifactId>
             <version>20.0</version>
         </dependency>
-        <dependency>
-            <groupId>com.liepin</groupId>
-            <artifactId>ins-swift-butil</artifactId>
-            <version>0.0.34</version>
-        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
         <dependency>
             <groupId>org.springframework.data</groupId>
             <artifactId>spring-data-elasticsearch</artifactId>
             <version>3.1.10.RELEASE</version>
         </dependency>
-        <dependency>
-            <groupId>com.liepin</groupId>
-            <artifactId>ins-cetus-util</artifactId>
-            <version>0.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.liepin</groupId>
-            <artifactId>ins-comp-client</artifactId>
-            <version>1.1.0-liuao12-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
     <!-- Package as an executable jar -->
