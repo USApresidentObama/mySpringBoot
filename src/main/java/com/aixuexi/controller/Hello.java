@@ -1,16 +1,22 @@
 package com.aixuexi.controller;
 
+import com.aixuexi.annotation.ControllerSecureVisit;
 import com.aixuexi.model.EnumColor;
 import com.aixuexi.model.Role;
 import com.aixuexi.model.User;
+import com.aixuexi.util.UtilTest;
 import com.aixuexi.util.annotation.JSON;
 import com.aixuexi.util.annotation.JSON2;
 import com.aixuexi.util.annotation.JSONS;
 import java.util.Map;
+import javax.rmi.CORBA.Util;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestAttribute;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -33,16 +39,13 @@ import java.util.List;
 @RequestMapping("")
 public class Hello {
 
+    @Autowired
+    private UtilTest utilTest;
 
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public void getUser(WebRequest request, String id) {
-        Map<String, String[]> map = request.getParameterMap();
-        for (Map.Entry<String, String[]> entry : map.entrySet()) {
-            System.out.println(entry.getKey());
-            System.out.println(entry.getValue()[0]);
-        }
-        System.out.println(id);
+    public void getUser(Integer id, String name) {
+
     }
 
     @ResponseBody
@@ -92,6 +95,8 @@ public class Hello {
             }
         }
     }
+
+
 
 
 }

@@ -9,20 +9,21 @@ import java.util.List;
 public class User implements Serializable {
     private static final long serialVersionUID = -6309285186522625503L;
 
-    private Integer id;
+    private long id;
     private Integer age;
     private String name;
     private Integer sex;
     private Integer deleted;
     private EnumColor enumColor;
+    private Boolean man;
 
     private List<Role> roles;
 
-    public Integer getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(Integer id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -74,8 +75,26 @@ public class User implements Serializable {
         this.enumColor = enumColor;
     }
 
-    @Override public String toString() {
-        return "User{" + "id=" + id + ", age=" + age + ", name='" + name + '\'' + ", sex=" + sex + ", deleted="
-                + deleted + ", enumColor=" + enumColor + ", roles=" + roles + '}';
+    public Boolean getMan() {
+        return man;
+    }
+
+    public void setMan(Boolean man) {
+        this.man = man;
+    }
+
+    @Override
+    public String toString() {
+        final StringBuffer sb = new StringBuffer("User{");
+        sb.append("id=").append(id);
+        sb.append(", age=").append(age);
+        sb.append(", name='").append(name).append('\'');
+        sb.append(", sex=").append(sex);
+        sb.append(", deleted=").append(deleted);
+        sb.append(", enumColor=").append(enumColor);
+        sb.append(", man=").append(man);
+        sb.append(", roles=").append(roles);
+        sb.append('}');
+        return sb.toString();
     }
 }

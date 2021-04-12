@@ -46,6 +46,21 @@
             <artifactId>elasticsearch</artifactId>
             <version>2.4.6</version>
         </dependency>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.8.1</version>
+        </dependency>
+        <dependency>
+            <groupId>com.google.guava</groupId>
+            <artifactId>guava</artifactId>
+            <version>20.0</version>
+        </dependency>
+        <dependency>
+            <groupId>com.liepin</groupId>
+            <artifactId>ins-swift-butil</artifactId>
+            <version>0.0.34</version>
+        </dependency>
         <!-- https://mvnrepository.com/artifact/org.springframework.data/spring-data-elasticsearch -->
         <dependency>
             <groupId>org.springframework.data</groupId>
@@ -56,6 +71,11 @@
             <groupId>com.liepin</groupId>
             <artifactId>ins-cetus-util</artifactId>
             <version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>com.liepin</groupId>
+            <artifactId>ins-comp-client</artifactId>
+            <version>1.1.0-liuao12-SNAPSHOT</version>
         </dependency>
 
     </dependencies>
