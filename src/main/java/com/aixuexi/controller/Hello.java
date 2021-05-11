@@ -4,6 +4,8 @@ import com.aixuexi.annotation.ControllerSecureVisit;
 import com.aixuexi.model.EnumColor;
 import com.aixuexi.model.Role;
 import com.aixuexi.model.User;
+import com.aixuexi.service.LiuaoService;
+import com.aixuexi.util.Test;
 import com.aixuexi.util.UtilTest;
 import com.aixuexi.util.annotation.JSON;
 import com.aixuexi.util.annotation.JSON2;
@@ -41,11 +43,12 @@ public class Hello {
 
     @Autowired
     private UtilTest utilTest;
+    @Autowired
+    private LiuaoService liuaoService;
 
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public void getUser(Integer id, String name) {
-
     }
 
     @ResponseBody

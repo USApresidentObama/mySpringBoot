@@ -1,9 +1,6 @@
 package com.aixuexi;
 
 
-import com.liepin.common.other.DateUtil;
-import com.liepin.common.other.MD5Util;
-import com.liepin.common.other.StringUtil;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -11,11 +8,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import org.apache.commons.lang3.StringUtils;
 
 public class Tets {
 
@@ -32,29 +28,17 @@ public class Tets {
             bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
             String temp = null;
             while ((temp = bufferedReader.readLine()) != null) {
-                if (StringUtil.isNotBlank(temp)) {
+                if (StringUtils.isNotBlank(temp)) {
                     ecompIdList.add(Long.valueOf(temp));
                 }
             }
-//            String[] ecompIdsArr = ecompIdsBuilder.toString().split(",");
-//            for (String ecompIdStr : ecompIdsArr) {
-//                if(StringUtil.isNotBlank(ecompIdStr)) {
-//                    usereIdSet.add(Long.valueOf(ecompIdStr));
-//                }
-//            }
         }catch (Exception e) {
             System.out.printf("失败"+e);
         }
         System.out.println(ecompIdList);
     }
 
-    public static final int[] hash(String objectId) {
-        String md5Encode = MD5Util.MD5Encode(objectId);
-        String m = md5Encode.substring(0, 4);
-        int b = Integer.parseInt(m.substring(0, 3), 16);
-        int t = Integer.parseInt(m.substring(3, 4), 16);
-        return new int[]{b, t};
-    }
+
 
     private static void mobileEscape(String text, final StringBuilder builder) {
         try {
@@ -70,17 +54,6 @@ public class Tets {
         }
     }
 
-    private static String getMailSendtime() {
-        // 比较时间
-        String currentDatetime = DateUtil.getCurrentDateTime();
-        final String time = "100000";
-        String sendTime = DateUtil.getCurrentDate() + time;
-        // 第二天早十点
-        if (currentDatetime.compareTo(sendTime) > 0) {
-            return DateUtil.getDate(1) + time;
-        }
-        return sendTime;
-    }
 
     public static long daysBetween(String startdate, String enddate) {
         if (startdate == null || "".equals(startdate)) {

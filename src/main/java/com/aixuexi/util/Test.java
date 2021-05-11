@@ -1,60 +1,135 @@
 package com.aixuexi.util;
 
-import com.aixuexi.model.User;
-import com.liepin.b.common.util.BCommonDateUtil;
-import com.liepin.cetus.util.base.BigIntegerUtil;
-import com.liepin.common.other.DateUtil;
-import com.liepin.common.other.MD5Util;
-import com.liepin.common.other.StringUtil;
-import com.liepin.platform.comp.company.dto.CompDto;
-import java.math.BigInteger;
-import java.net.URI;
-import java.sql.Timestamp;
-import java.text.MessageFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Stack;
 import java.util.concurrent.ExecutionException;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
-import javafx.scene.layout.Priority;
-import org.apache.commons.lang3.StringUtils;
-import org.joda.time.DateTime;
-
-import java.math.BigDecimal;
-import java.util.*;
-import java.util.regex.Pattern;
+import org.apache.log4j.Logger;
 
 public class Test {
-    public static void main(String[] args) throws InterruptedException, ExecutionException, ParseException {
 
-        String a = "20[]20[-]12-1";
-
-
-
+    public static void main(String[] args) {
+        I18NUtil i18NUtil = I18NUtil.getInstance();
+        String a =i18NUtil.getLable("lable_personal_candidate");
+        System.out.println(a);
     }
 
-    public static String addDay(String dateStr, int days, String pattern) {
-        if (StringUtil.isBlank(dateStr) || StringUtil.isBlank(pattern)) {
-            return "";
-        }
 
-        // XXX 待测试对比,替换成下面的实现方式.remark by zhangbw#2019/04/28
-        // return DateTime.parse(dateStr,
-        // DateTimeFormat.forPattern(pattern)).plusDays(days).toString(pattern);
-
-        SimpleDateFormat dateFormat = new SimpleDateFormat(pattern);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setLenient(false);// 不把月份超过12的数据转换成下一年
-        try {
-            calendar.setTime(dateFormat.parse(dateStr));
-        } catch (ParseException e) {
-            return "";
+    public static void bublle(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            for (int j = 0; j < arr.length - i - 1; j++) {
+                if (arr[j+1] > arr[j]) {
+                    int temp = arr[j];
+                    arr[j] = arr[j+1];
+                    arr[j+1] = temp;
+                }
+            }
         }
-        calendar.add(Calendar.DAY_OF_MONTH, days);// 增加天数
-        return dateFormat.format(calendar.getTime());
     }
 
+    public static int binaryWithDiGui(int low, int high, int[] arr, int target) {
+        if (target < arr[low] || target > arr[high] || low > high) {
+            return -1;
+        }
+        int mid = (low + high) / 2;
+        if (target < arr[mid]) {
+            return binaryWithDiGui(low, mid-1, arr, target);
+        }
+        if (arr[mid] < target) {
+            return binaryWithDiGui(mid+1, high, arr, target);
+        }
+        return mid;
+    }
+
+    public static int binaryWithOutDiGui(int low, int high, int[] arr, int target) {
+        if (target < arr[low] || target > arr[high] || low > high) {
+            return -1;
+        }
+        while (low <= high) {
+            int mid = (low + high) / 2;
+            if (target < arr[mid]) {
+                high = mid - 1;
+            } else if (arr[mid] < target) {
+                low = mid + 1;
+            } else {
+                return mid;
+            }
+        }
+        return -1;
+    }
+
+    public static void quickSort(int[] arr, int left, int right) {
+        int mid = (left + right)/2;
+        swap(mid, left, arr);
+        int index = arr[left];
+        int low = left;
+        int high = right;
+
+        while (low < high) {
+            while (low < high && index <= arr[high]) {
+                high --;
+            }
+            swap(low, high, arr);
+            while (low < high && index >= arr[low]) {
+                low ++;
+            }
+            swap(low, high, arr);
+        }
+        if (left < low) {
+            quickSort(arr, left, low - 1);
+        }
+        if (right > low) {
+            quickSort(arr, low + 1, right);
+        }
+    }
+
+    public static void quickSortWithStack(int[] arr, int left, int right) {
+        Stack<Map<String, Integer>> stack = new Stack<>();
+
+        Map<String, Integer> map = new HashMap<>();
+        map.put("low", left);
+        map.put("high", right);
+        stack.push(map);
+
+        while (!stack.isEmpty()) {
+            Map<String, Integer> tempMap = stack.pop();
+            int low = tempMap.get("low");
+            int high = tempMap.get("high");
+            int tempLow = low;
+            int tempHigh = high;
+
+            int index = arr[low];
+            while (low < high) {
+                while (low < high && index <= arr[high]) {
+                    high--;
+                }
+                swap(low, high, arr);
+                while (low < high && index >= arr[low]) {
+                    low++;
+                }
+                swap(low, high, arr);
+            }
+            if (tempLow < low) {
+                Map<String, Integer> map1 = new HashMap<>();
+                map1.put("low", left);
+                map1.put("high", low - 1);
+                stack.push(map1);
+            }
+            if (tempHigh > low) {
+                Map<String, Integer> map2 = new HashMap<>();
+                map2.put("low", low + 1);
+                map2.put("high", right);
+                stack.push(map2);
+            }
+        }
+    }
+
+    public static void swap(int a, int b, int[] arr) {
+        int temp = arr[a];
+        arr[a] = arr[b];
+        arr[b] = temp;
+    }
 
 
 
