@@ -27,7 +27,6 @@ public class FirstFilter implements Filter {
             HttpServletResponse response = (HttpServletResponse) servletResponse;
             response.addCookie(cookie);
         cookie.setMaxAge(30);
-        cookie.setDomain(".liepin.com");
         response.addHeader("xiaoliu", "asda");
             filterChain.doFilter(servletRequest, servletResponse);
 //            System.out.println("离开filter");
