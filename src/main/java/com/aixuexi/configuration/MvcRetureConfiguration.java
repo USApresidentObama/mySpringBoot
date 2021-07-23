@@ -20,7 +20,7 @@ public class MvcRetureConfiguration implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         ResultInterceptor interceptor = new ResultInterceptor();
-        registry.addInterceptor(interceptor);
+         registry.addInterceptor(interceptor);
         WebMvcConfigurer.super.addInterceptors(registry);
     }
 

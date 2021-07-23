@@ -55,7 +55,7 @@ public class Hello {
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
     public User getUser(Integer id, String name) {
         User user = new User();
-        return user;
+        throw new LiuaoException("dasd");
     }
 
     @ResponseBody
@@ -76,34 +76,6 @@ public class Hello {
             inputStream.close();
         }
 
-    }
-
-    @RequestMapping(value = "/government/getejoblist.json", method = RequestMethod.GET)
-    public void getlist(HttpServletRequest request) {
-        String a = request.getRequestURI();
-        String b = request.getRequestURL().toString();
-        System.out.println(a);
-        System.out.println(b);
-        System.out.println(a.startsWith("/government/getejoblist.json"));
-
-    }
-
-
-    private void recursiveRemoveStyle(List<Node> nodes) {
-        if (nodes != null && nodes.size() > 0) {
-            for (Node node : nodes) {
-                if (node.childNodes().size() == 1) {
-                    String text = node.toString();
-                    if (text.contains("[") || text.contains("]") || text.contains("$")) {
-                        String style = node.attr("style");
-                        if (style.contains("position") || style.contains("top") || style.contains("relative")) {
-                            node.removeAttr("style");
-                        }
-                    }
-                }
-                recursiveRemoveStyle(node.childNodes());
-            }
-        }
     }
 
 
