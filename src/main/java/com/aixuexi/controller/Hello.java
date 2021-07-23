@@ -1,6 +1,7 @@
 package com.aixuexi.controller;
 
 import com.aixuexi.annotation.ControllerSecureVisit;
+import com.aixuexi.liuaotest.exception.LiuaoException;
 import com.aixuexi.model.EnumColor;
 import com.aixuexi.model.Role;
 import com.aixuexi.model.User;
@@ -16,6 +17,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -33,6 +35,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created by liuao on 2018/11/19.
@@ -45,10 +48,14 @@ public class Hello {
     private UtilTest utilTest;
     @Autowired
     private LiuaoService liuaoService;
+    @Value("${service.name}")
+    public String serviceName;
 
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public void getUser(Integer id, String name) {
+    public User getUser(Integer id, String name) {
+        User user = new User();
+        return user;
     }
 
     @ResponseBody

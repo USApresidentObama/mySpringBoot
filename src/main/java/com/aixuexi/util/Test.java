@@ -1,18 +1,23 @@
 package com.aixuexi.util;
 
 import java.text.ParseException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Stack;
+import java.util.*;
 import java.util.concurrent.ExecutionException;
+
+import com.aixuexi.model.User;
+import com.google.common.collect.Lists;
 import org.apache.log4j.Logger;
 
 public class Test {
 
     public static void main(String[] args) {
-        I18NUtil i18NUtil = I18NUtil.getInstance();
-        String a =i18NUtil.getLable("lable_personal_candidate");
-        System.out.println(a);
+//        User user = new User();
+//        user.setId(1l);
+//        Long id = user.getId();
+//        user.setId(null);
+//        System.out.println(id);
+//        System.out.println(user);
+
     }
 
 

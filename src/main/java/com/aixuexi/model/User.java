@@ -9,7 +9,7 @@ import java.util.List;
 public class User implements Serializable {
     private static final long serialVersionUID = -6309285186522625503L;
 
-    private long id;
+    private Long id;
     private Integer age;
     private String name;
     private Integer sex;
@@ -19,11 +19,11 @@ public class User implements Serializable {
 
     private List<Role> roles;
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

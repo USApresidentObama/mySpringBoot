@@ -1,5 +1,6 @@
 package com.aixuexi.filter;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.stereotype.Component;
 
 import javax.servlet.Filter;
@@ -11,8 +12,8 @@ import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebFilter;
 import java.io.IOException;
 
-@Component
 @WebFilter
+@Order(2)
 public class SecondFilter implements Filter {
 
     @Override
