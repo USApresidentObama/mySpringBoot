@@ -11,7 +11,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(LiuaoException.class)
     @ResponseBody
     public ResultData bizHandler(LiuaoException e) {
-        return ResultData.fail(e.getMessage());
+        return ResultData.fail(e.getMessage(), e.getImessageCode().getCode());
     }
 
     @ExceptionHandler(Exception.class)

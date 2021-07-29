@@ -1,9 +1,10 @@
 package com.aixuexi.liuaotest.exception;
 
+import com.aixuexi.common.enums.ImessageCode;
+
 public class LiuaoException extends RuntimeException {
 
-    /**错误描述*/
-    private String msg;
+    private ImessageCode imessageCode;
 
     public LiuaoException() {
         super();
@@ -13,16 +14,20 @@ public class LiuaoException extends RuntimeException {
     }
     public LiuaoException(String msg) {
         super(msg);
-        this.msg = msg;
     }
     public LiuaoException(String msg, Throwable t) {
         super(msg,t);
-        this.msg = msg;
     }
-    public String getMsg() {
-        return msg;
+    public LiuaoException(ImessageCode imessageCod) {
+        super(imessageCod.getMessage());
+        this.imessageCode = imessageCod;
     }
-    public void setMsg(String msg) {
-        this.msg = msg;
+
+    public ImessageCode getImessageCode() {
+        return imessageCode;
+    }
+
+    public void setImessageCode(ImessageCode imessageCode) {
+        this.imessageCode = imessageCode;
     }
 }

@@ -1,6 +1,7 @@
 package com.aixuexi.controller;
 
 import com.aixuexi.annotation.ControllerSecureVisit;
+import com.aixuexi.common.enums.ExceptionEnum;
 import com.aixuexi.liuaotest.exception.LiuaoException;
 import com.aixuexi.model.EnumColor;
 import com.aixuexi.model.Role;
@@ -13,6 +14,8 @@ import com.aixuexi.util.annotation.JSON2;
 import com.aixuexi.util.annotation.JSONS;
 import java.util.Map;
 import javax.rmi.CORBA.Util;
+
+import com.google.common.collect.Lists;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.*;
 import org.jsoup.select.Elements;
@@ -53,9 +56,10 @@ public class Hello {
 
     @ResponseBody
     @RequestMapping(value = "/hello", method = RequestMethod.GET)
-    public User getUser(Integer id, String name) {
+    public List<User> getUser(Integer id, String name) {
         User user = new User();
-        throw new LiuaoException("dasd");
+//        throw new LiuaoException(ExceptionEnum.PARAMS_ERROR);
+        return Lists.newArrayList(user);
     }
 
     @ResponseBody
