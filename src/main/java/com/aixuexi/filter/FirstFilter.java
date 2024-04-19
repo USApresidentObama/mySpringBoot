@@ -33,6 +33,8 @@ public class FirstFilter implements Filter {
             response.addCookie(cookie);
         cookie.setMaxAge(30);
         response.addHeader("xiaoliu", "asda");
+//        response.sendRedirect("https://testsso.sohu-inc.com/login?service=http://localhost:8081/userFootMarkStatistics/query.html");
+//        return;
             filterChain.doFilter(servletRequest, servletResponse);
             System.out.println("离开filter");
     }

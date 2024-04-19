@@ -1,25 +1,227 @@
 package com.aixuexi.util;
 
+import java.io.*;
+import java.net.URLDecoder;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.*;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAdjusters;
 import java.util.*;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.stream.Collectors;
 
+import com.aixuexi.model.PositionInfoDto;
+import com.aixuexi.model.Role;
 import com.aixuexi.model.User;
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.google.common.collect.Lists;
+import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections.ListUtils;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.lang3.time.DateFormatUtils;
+import org.apache.commons.lang3.time.DateUtils;
 import org.apache.log4j.Logger;
+import sun.security.provider.MD5;
 
 public class Test {
 
-    public static void main(String[] args) {
-//        User user = new User();
-//        user.setId(1l);
-//        Long id = user.getId();
-//        user.setId(null);
-//        System.out.println(id);
-//        System.out.println(user);
+    protected static char[] hexDigits = new char[]{'0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};
+
+    public static final ExecutorService threadPool = Executors.newFixedThreadPool(8);
+
+    public static void main(String[] args) throws UnsupportedEncodingException {
+    }
+
+    public static void  close(Closeable closeable) {
+        if (closeable != null) {
+            try {
+                closeable.close();
+            } catch (Exception var3) {
+            }
+        }
 
     }
 
+    public static String getSign(Map<String,Object> params, String signKey) throws UnsupportedEncodingException{
+        if(params == null || params.size() == 0){
+            return "";
+        }
+        params.put("sign_key", signKey);
+        String paramsStr = toSortParamsStr(params);
+        //LoggerUtils.consoleInfo("paramsStr："+paramsStr);
+        //String md5Str  = MD5FileUtil.getMD5String(paramsStr);
+        String md5Str = str2Md5(paramsStr);
+        //LoggerUtils.consoleInfo("md5Str："+md5Str);
+        params.remove("sign_key");
+        return md5Str.toLowerCase();
+    }
+    public static String str2Md5(String inStr) {
+        try {
+            byte[] strTemp = inStr.getBytes("UTF-8");
+            return getMD5String(strTemp);
+			/*MessageDigest mdTemp = MessageDigest.getInstance("MD5");
+			mdTemp.update(strTemp);
+			byte[] md = mdTemp.digest();
+			return toHexString(md);*/
+        } catch (Exception e) {
+            return null;
+        }
+    }
+    public static String getMD5String(byte[] bytes) {
+        MessageDigest digest = null;
+
+        try {
+            digest = MessageDigest.getInstance("MD5");
+        } catch (NoSuchAlgorithmException var3) {
+        }
+
+        if (digest == null) {
+            return null;
+        } else {
+            digest.update(bytes);
+            return bufferToHex(digest.digest());
+        }
+    }
+    private static String bufferToHex(byte[] bytes) {
+        return bufferToHex(bytes, 0, bytes.length);
+    }
+    private static String bufferToHex(byte[] bytes, int m, int n) {
+        StringBuffer stringbuffer = new StringBuffer(2 * n);
+        int k = m + n;
+
+        for(int l = m; l < k; ++l) {
+            appendHexPair(bytes[l], stringbuffer);
+        }
+
+        return stringbuffer.toString();
+    }
+
+    private static void appendHexPair(byte bt, StringBuffer stringbuffer) {
+        char c0 = hexDigits[(bt & 240) >> 4];
+        char c1 = hexDigits[bt & 15];
+        stringbuffer.append(c0);
+        stringbuffer.append(c1);
+    }
+
+    public static String toSortParamsStr(Map<String,Object> params){
+        if(params == null || params.size() == 0){
+            return "";
+        }
+        int i=0;
+        String[] strArray = new String[params.size()];
+        for(Map.Entry<String, Object> entry : params.entrySet()){
+            strArray[i] = entry.getKey() ;
+            i++;
+        }
+
+        Arrays.sort(strArray);
+
+        String paramsStr = "";
+        for(String key : strArray){
+            paramsStr += (key + "=" + params.get(key) + "&");
+        }
+        paramsStr = paramsStr.substring(0, paramsStr.length()-1);
+        //LoggerUtils.consoleInfo(paramsStr);
+        return paramsStr;
+    }
+
+    public static void dd(PositionInfoDto positionInfoDto, List<Integer> list) {
+        list.add(positionInfoDto.getId());
+        if (CollectionUtils.isEmpty(positionInfoDto.getSubPositionInfoDtoList())) {
+            return;
+        }
+        for (PositionInfoDto subPositionInfoDto : positionInfoDto.getSubPositionInfoDtoList()) {
+            dd(subPositionInfoDto, list);
+        }
+    }
+
+    public static LocalDateTime getLocalDateTime(long time) {
+        Instant instant = Instant.ofEpochMilli(time);
+        ZoneId zone = ZoneOffset.of("+8");
+        return LocalDateTime.ofInstant(instant, zone);
+    }
+
+    public static <T> T cast(Class<T> clazz) {
+        System.out.println(clazz == Object.class && 1==1);
+        return null;
+    }
+
+    public static User getUser(Integer id) {
+        User user = new User();
+        user.setId(id.longValue());
+        Role role = new Role();
+        role.setId(id);
+        user.setRoles(role);
+        return user;
+    }
+
+    public static String getUniqueId(String pwd) {
+        String uuid = UUID.randomUUID().toString().replace("-", "");
+        long longtime = new Date().getTime();
+        return "" + longtime + MD5(pwd+uuid);
+    }
+
+    public static String MD5(String s) {
+        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F' };
+        try {
+            byte[] btInput = s.getBytes();
+            // 获得MD5摘要算法的 MessageDigest 对象
+            MessageDigest mdInst = MessageDigest.getInstance("MD5");
+            // 使用指定的字节更新摘要
+            mdInst.update(btInput);
+            // 获得密文
+            byte[] md = mdInst.digest();
+            // 把密文转换成十六进制的字符串形式
+            int j = md.length;
+            char str[] = new char[j * 2];
+            int k = 0;
+            for (int i = 0; i < j; i++) {
+                byte byte0 = md[i];
+                str[k++] = hexDigits[byte0 >>> 4 & 0xf];
+                str[k++] = hexDigits[byte0 & 0xf];
+            }
+            return new String(str);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+
+    public static int intervalDay(Date d1, Date d2) {
+        long intervalMillSecond = setToDayStartTime(d1).getTime() - setToDayStartTime(d2).getTime();
+        // 相差的天数 = 相差的毫秒数 / 每天的毫秒数 (小数位采用去尾制)
+        return (int) (intervalMillSecond / (24*60*60*1000));
+    }
+
+    public static Date getDate(String date, String format) {
+        Date d;
+        try {
+            d = new SimpleDateFormat(format).parse(date);
+        } catch (ParseException e) {
+            d = null;
+        }
+        return d;
+    }
+
+    public static Date setToDayStartTime(Date date) {
+        Calendar calendar = Calendar.getInstance();
+
+        calendar.setTimeInMillis(date.getTime());
+        calendar.set(Calendar.HOUR_OF_DAY, 0);
+        calendar.set(Calendar.MINUTE, 0);
+        calendar.set(Calendar.SECOND, 0);
+        calendar.set(Calendar.MILLISECOND, 0);
+
+        return calendar.getTime();
+    }
 
     public static void bublle(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
