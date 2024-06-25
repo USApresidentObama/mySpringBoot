@@ -1,34 +1,30 @@
 package com.aixuexi.util;
 
-import java.io.*;
-import java.net.URLDecoder;
+import com.aixuexi.model.PositionInfoDto;
+import com.aixuexi.model.Role;
+import com.aixuexi.model.User;
+import org.apache.commons.collections.CollectionUtils;
+
+import java.io.Closeable;
+import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.time.*;
-import java.time.format.DateTimeFormatter;
-import java.time.temporal.TemporalAdjusters;
-import java.util.*;
-import java.util.concurrent.ExecutionException;
+import java.time.Instant;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
+import java.time.ZoneOffset;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.Stack;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.stream.Collectors;
-
-import com.aixuexi.model.PositionInfoDto;
-import com.aixuexi.model.Role;
-import com.aixuexi.model.User;
-import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
-import com.alibaba.fastjson.JSONObject;
-import com.google.common.collect.Lists;
-import org.apache.commons.collections.CollectionUtils;
-import org.apache.commons.collections.ListUtils;
-import org.apache.commons.lang3.StringUtils;
-import org.apache.commons.lang3.time.DateFormatUtils;
-import org.apache.commons.lang3.time.DateUtils;
-import org.apache.log4j.Logger;
-import sun.security.provider.MD5;
 
 public class Test {
 
@@ -36,10 +32,17 @@ public class Test {
 
     public static final ExecutorService threadPool = Executors.newFixedThreadPool(8);
 
+
+
+
+
     public static void main(String[] args) throws UnsupportedEncodingException {
+        int[] nums = {2, 1, 2, 4, 5,7};
+        System.out.println(longestConsecutive(nums));
+
     }
 
-    public static void  close(Closeable closeable) {
+    public static void close(Closeable closeable) {
         if (closeable != null) {
             try {
                 closeable.close();
@@ -49,8 +52,42 @@ public class Test {
 
     }
 
-    public static String getSign(Map<String,Object> params, String signKey) throws UnsupportedEncodingException{
-        if(params == null || params.size() == 0){
+    public static int longestConsecutive(int[] nums) {
+        int maxLength = 1;
+        for (int i = 0; i < nums.length; i++) {
+            int temLength = 1;
+            int a = nums[i];
+            for (int j = 0; j < nums.length; j++) {
+                a++;
+                if (isExist(nums, a)) {
+                    temLength++;
+                    if (temLength == nums.length) {
+                        return temLength;
+                    }
+                }else {
+                    break;
+                }
+            }
+
+            if (temLength > maxLength) {
+                maxLength = temLength;
+            }
+        }
+        return maxLength;
+    }
+
+    public static boolean isExist(int[] nums, int a) {
+        for (int i = 0; i < nums.length; i++) {
+            if (a == nums[i]) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+
+    public static String getSign(Map<String, Object> params, String signKey) throws UnsupportedEncodingException {
+        if (params == null || params.size() == 0) {
             return "";
         }
         params.put("sign_key", signKey);
@@ -62,6 +99,7 @@ public class Test {
         params.remove("sign_key");
         return md5Str.toLowerCase();
     }
+
     public static String str2Md5(String inStr) {
         try {
             byte[] strTemp = inStr.getBytes("UTF-8");
@@ -74,6 +112,7 @@ public class Test {
             return null;
         }
     }
+
     public static String getMD5String(byte[] bytes) {
         MessageDigest digest = null;
 
@@ -89,14 +128,16 @@ public class Test {
             return bufferToHex(digest.digest());
         }
     }
+
     private static String bufferToHex(byte[] bytes) {
         return bufferToHex(bytes, 0, bytes.length);
     }
+
     private static String bufferToHex(byte[] bytes, int m, int n) {
         StringBuffer stringbuffer = new StringBuffer(2 * n);
         int k = m + n;
 
-        for(int l = m; l < k; ++l) {
+        for (int l = m; l < k; ++l) {
             appendHexPair(bytes[l], stringbuffer);
         }
 
@@ -110,24 +151,24 @@ public class Test {
         stringbuffer.append(c1);
     }
 
-    public static String toSortParamsStr(Map<String,Object> params){
-        if(params == null || params.size() == 0){
+    public static String toSortParamsStr(Map<String, Object> params) {
+        if (params == null || params.size() == 0) {
             return "";
         }
-        int i=0;
+        int i = 0;
         String[] strArray = new String[params.size()];
-        for(Map.Entry<String, Object> entry : params.entrySet()){
-            strArray[i] = entry.getKey() ;
+        for (Map.Entry<String, Object> entry : params.entrySet()) {
+            strArray[i] = entry.getKey();
             i++;
         }
 
         Arrays.sort(strArray);
 
         String paramsStr = "";
-        for(String key : strArray){
+        for (String key : strArray) {
             paramsStr += (key + "=" + params.get(key) + "&");
         }
-        paramsStr = paramsStr.substring(0, paramsStr.length()-1);
+        paramsStr = paramsStr.substring(0, paramsStr.length() - 1);
         //LoggerUtils.consoleInfo(paramsStr);
         return paramsStr;
     }
@@ -149,7 +190,7 @@ public class Test {
     }
 
     public static <T> T cast(Class<T> clazz) {
-        System.out.println(clazz == Object.class && 1==1);
+        System.out.println(clazz == Object.class && 1 == 1);
         return null;
     }
 
@@ -165,12 +206,12 @@ public class Test {
     public static String getUniqueId(String pwd) {
         String uuid = UUID.randomUUID().toString().replace("-", "");
         long longtime = new Date().getTime();
-        return "" + longtime + MD5(pwd+uuid);
+        return "" + longtime + MD5(pwd + uuid);
     }
 
     public static String MD5(String s) {
-        char hexDigits[] = { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
-                'A', 'B', 'C', 'D', 'E', 'F' };
+        char hexDigits[] = {'0', '1', '2', '3', '4', '5', '6', '7', '8', '9',
+                'A', 'B', 'C', 'D', 'E', 'F'};
         try {
             byte[] btInput = s.getBytes();
             // 获得MD5摘要算法的 MessageDigest 对象
@@ -198,7 +239,7 @@ public class Test {
     public static int intervalDay(Date d1, Date d2) {
         long intervalMillSecond = setToDayStartTime(d1).getTime() - setToDayStartTime(d2).getTime();
         // 相差的天数 = 相差的毫秒数 / 每天的毫秒数 (小数位采用去尾制)
-        return (int) (intervalMillSecond / (24*60*60*1000));
+        return (int) (intervalMillSecond / (24 * 60 * 60 * 1000));
     }
 
     public static Date getDate(String date, String format) {
@@ -226,10 +267,10 @@ public class Test {
     public static void bublle(int[] arr) {
         for (int i = 0; i < arr.length; i++) {
             for (int j = 0; j < arr.length - i - 1; j++) {
-                if (arr[j+1] > arr[j]) {
+                if (arr[j + 1] > arr[j]) {
                     int temp = arr[j];
-                    arr[j] = arr[j+1];
-                    arr[j+1] = temp;
+                    arr[j] = arr[j + 1];
+                    arr[j + 1] = temp;
                 }
             }
         }
@@ -241,10 +282,10 @@ public class Test {
         }
         int mid = (low + high) / 2;
         if (target < arr[mid]) {
-            return binaryWithDiGui(low, mid-1, arr, target);
+            return binaryWithDiGui(low, mid - 1, arr, target);
         }
         if (arr[mid] < target) {
-            return binaryWithDiGui(mid+1, high, arr, target);
+            return binaryWithDiGui(mid + 1, high, arr, target);
         }
         return mid;
     }
@@ -267,7 +308,7 @@ public class Test {
     }
 
     public static void quickSort(int[] arr, int left, int right) {
-        int mid = (left + right)/2;
+        int mid = (left + right) / 2;
         swap(mid, left, arr);
         int index = arr[left];
         int low = left;
@@ -275,11 +316,11 @@ public class Test {
 
         while (low < high) {
             while (low < high && index <= arr[high]) {
-                high --;
+                high--;
             }
             swap(low, high, arr);
             while (low < high && index >= arr[low]) {
-                low ++;
+                low++;
             }
             swap(low, high, arr);
         }
@@ -337,11 +378,6 @@ public class Test {
         arr[a] = arr[b];
         arr[b] = temp;
     }
-
-
-
-
-
 
 
 }
